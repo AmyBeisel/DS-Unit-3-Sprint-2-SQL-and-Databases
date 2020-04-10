@@ -56,6 +56,21 @@ LEFT JOIN armory_weapon as aw ON ai.item_id = aw.item_ptr_id
 GROUP BY character_id
 LIMIT 20"""
 
+query10 = """SELECT avg(total_items) as avg_items
+FROM (
+    -- row per character = 302
+    SELECT 
+        c.character_id
+        ,c.name
+        --,ci.item_id
+        ,count(distinct ci.item_id) as total_items
+        
+    FROM charactercreator_character c 
+    LEFT JOIN charactercreator_character_inventory ci 
+        ON c.character_id = ci.character_id
+    GROUP BY c.character_id
+) subz"""
+
 
 # results2 = curs.execute(query).fetchall()
 # print("--------")
