@@ -11,7 +11,7 @@ conn = sq.connect('buddymove_holidayiq.sqlite3')
 df.to_sql('buddymove_holiday', conn)
 
 curs = conn.cursor()
-
+ #comment
 
 
  #how many rows do I have?
