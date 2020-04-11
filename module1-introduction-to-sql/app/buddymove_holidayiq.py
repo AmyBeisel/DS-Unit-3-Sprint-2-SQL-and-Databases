@@ -9,7 +9,9 @@ df = pd.read_csv('./data/buddymove_holidayiq.csv')
 
 conn = sq.connect('buddymove_holidayiq.sqlite3')
 df.to_sql('buddymove_holiday', conn)
+
 curs = conn.cursor()
+
 
 
  #how many rows do I have?
