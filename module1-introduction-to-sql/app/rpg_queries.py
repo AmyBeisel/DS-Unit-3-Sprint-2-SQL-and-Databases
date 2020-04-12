@@ -143,11 +143,13 @@ print(result7["total_non_weapons"])
 print("---------")
 
 result8 = curs.execute(query8).fetchall()
-print("Total items for each character", result8)
-
+for rw in result8:
+    print(rw[0], rw[1])
 print("---------")
+
 result9 = curs.execute(query9).fetchall()
-print("Total weapons for each character", result9)
+for rw in result9:
+    print(rw['character_id'], rw['number_of_weapons'])
 print("---------")
 
 result10 = curs.execute(query10).fetchone()
