@@ -49,12 +49,19 @@ CREATE TABLE IF NOT EXISTS passengers (
 
 cursor.execute(table_creation_query)
 
+query = "SELECT count(DISTINCT id) FROM passengers"
+cursor.execute(query)
+result = cursor.fetchone() 
+if result[0] == 0:
+    
 
-#INSERT DATA INTO TABLE
-list_of_tuples = list(df.to_records(index = True))
 
-insertion_query = f"INSERT INTO passengers (id, survived, pclass, name, gender, age, sib_spouse_count, parent_child_count, fare) VALUES %s"
-execute_values(cursor, insertion_query, list_of_tuples)
+
+    #INSERT DATA INTO TABLE
+    list_of_tuples = list(df.to_records(index = True))
+
+    insertion_query = f"INSERT INTO passengers (id, survived, pclass, name, gender, age, sib_spouse_count, parent_child_count, fare) VALUES %s"
+    execute_values(cursor, insertion_query, list_of_tuples)
 
 
 #commit

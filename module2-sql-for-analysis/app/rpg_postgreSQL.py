@@ -1,10 +1,5 @@
 # app/rpg_postgreSQL.py
 
-# Reproduce (debugging as needed) the live lecture task of setting up and
-# inserting the RPG data into a PostgreSQL database, and add the code you write to
-# do so.
-
-
 import os
 import pandas as pd
 import sqlite3
@@ -24,11 +19,12 @@ DB1_HOST = os.getenv("DB1_HOST")
 #Read the db file
 DB_FILEPATH = os.path.join(os.path.dirname(__file__), "..", "data", "rpg_db.sqlite3")
 connection = sqlite3.connect(DB_FILEPATH)
-connection.row_factory = sqlite3.Row
 print(type(connection)) #> <class 'sqlite3.Connection'>
+
 cursor = connection.cursor()
 print(type(cursor)) #> <class 'sqlite3.Cursor'>
 
+character = cursor.execute("SELECT * FROM charactercreator_character").fetchall()
 
 
 #Connect to a PG database - in this case elephant SQL
@@ -38,12 +34,10 @@ print(type(connection)) #>
 cursor = connection.cursor()
 print(type(cursor)) #>
 
-characters = cursor.execute('SELECT * FROM charactercreator_character').fetchall()
-
-breakpoint()
 
 #CREATE TABLE:
 table_creation_query = """
+-- DROP TABLE IF EXISTS charactercreator_character; 
 CREATE TABLE IF NOT EXISTS charactercreator_character (
     character_id SERIAL PRIMARY KEY,
     name varchar(30),
@@ -70,11 +64,11 @@ insertion_query = """INSERT INTO charactercreator_character (
     intelligence, 
     dexterity, 
     wisdom)
-    VALUES %s"""
+    VALUES %s
+"""
 
-
-cursor.execute(insertion_query)
-execute_values(cursor, insertion_query, characters)
+#cursor.execute(insertion_query)
+execute_values(cursor, insertion_query, character)
 
 
 
